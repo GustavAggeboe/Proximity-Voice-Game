@@ -105,54 +105,6 @@
       ]
     },
     {
-      "Id": "e0e27b5e-deb9-41d1-8f71-98cd68a8f473",
-      "Name": "Player",
-      "Tags": "player",
-      "Networked": true,
-      "__Prefab": "code/playerprefab.prefab"
-    },
-    {
-      "Id": "27adc8db-4d0e-478b-8d18-1b69322c2fb7",
-      "Name": "NetworkManager",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "NetworkManager",
-          "__enabled": false
-        },
-        {
-          "__type": "NetworkHelper",
-          "PlayerPrefab": {
-            "_type": "gameobject",
-            "prefab": "code/playerprefab.prefab"
-          },
-          "SpawnPoints": [
-            {
-              "_type": "gameobject",
-              "go": "d534a0ce-cc8d-4a58-8923-8abd5910bdc8"
-            },
-            {
-              "_type": "gameobject",
-              "go": "fb6d008d-82f8-42e2-be62-2cb97df7feb3"
-            },
-            {
-              "_type": "gameobject",
-              "go": "3de4df7a-5592-488f-9136-61456ef2f7b1"
-            },
-            {
-              "_type": "gameobject",
-              "go": "2c867668-48cf-42d5-b623-f010f380f51e"
-            },
-            {
-              "_type": "gameobject",
-              "go": "780ea0cc-2835-4ff3-b1ba-1ffb94818f11"
-            }
-          ],
-          "StartServer": true
-        }
-      ]
-    },
-    {
       "Id": "1b4732c9-a5e5-4190-8827-885ab8b235da",
       "Name": "Spawnpoints",
       "Enabled": true,
@@ -187,6 +139,131 @@
           "Enabled": true
         }
       ]
+    },
+    {
+      "Id": "27adc8db-4d0e-478b-8d18-1b69322c2fb7",
+      "Name": "NetworkManager",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "NetworkManager",
+          "__enabled": false
+        },
+        {
+          "__type": "NetworkHelper",
+          "PlayerPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/playerprefab.prefab"
+          },
+          "SpawnPoints": [
+            {
+              "_type": "gameobject",
+              "go": "d534a0ce-cc8d-4a58-8923-8abd5910bdc8"
+            },
+            {
+              "_type": "gameobject",
+              "go": "fb6d008d-82f8-42e2-be62-2cb97df7feb3"
+            },
+            {
+              "_type": "gameobject",
+              "go": "3de4df7a-5592-488f-9136-61456ef2f7b1"
+            },
+            {
+              "_type": "gameobject",
+              "go": "2c867668-48cf-42d5-b623-f010f380f51e"
+            },
+            {
+              "_type": "gameobject",
+              "go": "780ea0cc-2835-4ff3-b1ba-1ffb94818f11"
+            }
+          ],
+          "StartServer": true
+        }
+      ]
+    },
+    {
+      "Id": "7878d2b4-9c75-48a8-af8c-dc514da71ed3",
+      "Name": "Camera",
+      "Position": "-93.64215,0,101.0475",
+      "Rotation": "0,0.1305262,0,0.9914449",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "CameraComponent",
+          "BackgroundColor": "0.33333,0.46275,0.52157,1",
+          "ClearFlags": "All",
+          "FieldOfView": 90,
+          "IsMainCamera": true,
+          "Orthographic": false,
+          "OrthographicHeight": 1204,
+          "Priority": 1,
+          "RenderExcludeTags": "",
+          "RenderTags": "",
+          "TargetEye": "None",
+          "Viewport": "0,0,1,1",
+          "ZFar": 10000,
+          "ZNear": 10
+        },
+        {
+          "__type": "Bloom",
+          "BloomColor": {
+            "color": [
+              {
+                "c": "1,1,1,1"
+              },
+              {
+                "t": 1,
+                "c": "1,1,1,1"
+              }
+            ],
+            "alpha": []
+          },
+          "BloomCurve": [
+            {
+              "y": 0.5
+            },
+            {
+              "x": 1,
+              "y": 1
+            }
+          ],
+          "Mode": "Additive",
+          "Strength": 0.5,
+          "Threshold": 0.5,
+          "ThresholdWidth": 0.5
+        },
+        {
+          "__type": "Tonemapping",
+          "ExposureCompensation": 0,
+          "MaximumExposure": 2,
+          "MinimumExposure": 1,
+          "Rate": 1
+        },
+        {
+          "__type": "Sharpen",
+          "Scale": 0.2
+        },
+        {
+          "__type": "CameraController",
+          "distance": 150,
+          "head": null,
+          "player": null
+        }
+      ],
+      "Children": [
+        {
+          "Id": "a8a339ba-56a9-41d4-95ba-8f835a01ebd4",
+          "Name": "Listener",
+          "Position": "0,0,0",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "AudioListener",
+              "UseCameraDirection": true
+            }
+          ]
+        }
+      ]
     }
   ],
   "SceneProperties": {
@@ -212,6 +289,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-03-04T12:44:07.190789\u002B01:00",
+  "LastSaved": "2024-03-04T20:38:35.4809452\u002B01:00",
   "__references": []
 }
