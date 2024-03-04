@@ -4,8 +4,7 @@ public sealed class CameraController : Component
 {
 	[Property] private PlayerMovement player;
 	[Property] private GameObject head;
-	[Property] private GameObject body;
-	[Property] private float distance;
+	[Property] private float distance = 150f;
 
 	private bool isFirstPerson => distance == 0f;
 	private Vector3 currentOffset = Vector3.Zero;
@@ -17,8 +16,10 @@ public sealed class CameraController : Component
 		if ( IsProxy )
 			Destroy();
 
-		camera = Components.Get<CameraComponent>();
-		bodyRenderer = body.Components.Get<ModelRenderer>();
+        player = GameObject.Components.GetInParentOrSelf<PlayerMovement>();
+		head = player.head;
+        camera = Components.Get<CameraComponent>();
+		bodyRenderer = player.Components.GetInChildren<ModelRenderer>();
 	}
 
 	protected override void OnUpdate()

@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "a4ab9dc0-2e2c-4bb5-b0b6-953ec361a1fc",
+    "Id": "d465fe2f-adfa-4abb-9f72-9550f28b1cfb",
     "Name": "playerprefab",
     "Tags": "player",
     "Networked": true,
@@ -19,17 +19,11 @@
       {
         "__type": "PlayerMovement",
         "airControl": 0.1,
-        "body": {
-          "_type": "gameobject",
-          "go": "b54f0fb2-05f1-482d-a1f3-e24927c8634c"
-        },
+        "body": null,
         "crouchHeight": 43.5,
         "crouchSpeed": 90,
         "groundControl": 4,
-        "head": {
-          "_type": "gameobject",
-          "go": "6a656764-2caa-4a19-89cd-146b3db2e47e"
-        },
+        "head": null,
         "jumpForce": 300,
         "maxForce": 10,
         "runSpeed": 215,
@@ -42,7 +36,7 @@
         "BodyWeight": 1,
         "EyeSource": {
           "_type": "gameobject",
-          "go": "6a656764-2caa-4a19-89cd-146b3db2e47e"
+          "go": "64155ffb-958d-4d4d-b9d5-a226edd617c8"
         },
         "EyesWeight": 1,
         "HeadWeight": 1,
@@ -55,21 +49,21 @@
         "LookAtEnabled": false,
         "Target": {
           "_type": "component",
-          "go": "b54f0fb2-05f1-482d-a1f3-e24927c8634c",
+          "go": "3cc8b4f8-f8a5-4f7f-83d6-b7a8ae09a53b",
           "component_type": "SkinnedModelRenderer"
         }
       }
     ],
     "Children": [
       {
-        "Id": "6a656764-2caa-4a19-89cd-146b3db2e47e",
+        "Id": "64155ffb-958d-4d4d-b9d5-a226edd617c8",
         "Name": "Head",
         "Position": "0,0,63.09742",
         "Tags": "head",
         "Enabled": true
       },
       {
-        "Id": "b54f0fb2-05f1-482d-a1f3-e24927c8634c",
+        "Id": "3cc8b4f8-f8a5-4f7f-83d6-b7a8ae09a53b",
         "Name": "Body",
         "Tags": "body",
         "Enabled": true,
@@ -89,7 +83,7 @@
         ]
       },
       {
-        "Id": "864edc1d-8e86-4af9-83c6-3e97ceeb8c37",
+        "Id": "65ac1b1b-8d81-4db8-a6e4-5640d82a90fc",
         "Name": "Camera",
         "Position": "-93.64215,0,101.0475",
         "Rotation": "0,0.1305262,0,0.9914449",
@@ -154,23 +148,23 @@
             "__type": "CameraController",
             "body": {
               "_type": "gameobject",
-              "go": "b54f0fb2-05f1-482d-a1f3-e24927c8634c"
+              "go": "3cc8b4f8-f8a5-4f7f-83d6-b7a8ae09a53b"
             },
             "distance": 150,
             "head": {
               "_type": "gameobject",
-              "go": "6a656764-2caa-4a19-89cd-146b3db2e47e"
+              "go": "64155ffb-958d-4d4d-b9d5-a226edd617c8"
             },
             "player": {
               "_type": "component",
-              "go": "a4ab9dc0-2e2c-4bb5-b0b6-953ec361a1fc",
+              "go": "d465fe2f-adfa-4abb-9f72-9550f28b1cfb",
               "component_type": "PlayerMovement"
             }
           }
         ],
         "Children": [
           {
-            "Id": "15daf327-c683-411b-94ca-3ab876d41409",
+            "Id": "ebdabcc9-2e37-4ac7-bf7d-6fab0a21159e",
             "Name": "Listener",
             "Position": "0,0,0",
             "Enabled": true,

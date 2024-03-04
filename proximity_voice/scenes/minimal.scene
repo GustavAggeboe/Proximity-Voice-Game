@@ -109,7 +109,6 @@
       "Name": "Player",
       "Tags": "player",
       "Networked": true,
-      "Enabled": true,
       "__Prefab": "code/playerprefab.prefab"
     },
     {
@@ -213,6 +212,6 @@
   },
   "Title": "minimal",
   "Description": "",
-  "LastSaved": "2024-03-04T11:30:11.1240866\u002B01:00",
+  "LastSaved": "2024-03-04T12:44:07.190789\u002B01:00",
   "__references": []
 }
