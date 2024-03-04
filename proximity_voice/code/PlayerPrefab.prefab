@@ -1,0 +1,192 @@
+{
+  "RootObject": {
+    "Id": "a4ab9dc0-2e2c-4bb5-b0b6-953ec361a1fc",
+    "Name": "playerprefab",
+    "Tags": "player",
+    "Networked": true,
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "CharacterController",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 69.91,
+        "IgnoreLayers": "player",
+        "Radius": 6.94,
+        "StepHeight": 18
+      },
+      {
+        "__type": "PlayerMovement",
+        "airControl": 0.1,
+        "body": {
+          "_type": "gameobject",
+          "go": "b54f0fb2-05f1-482d-a1f3-e24927c8634c"
+        },
+        "crouchHeight": 43.5,
+        "crouchSpeed": 90,
+        "groundControl": 4,
+        "head": {
+          "_type": "gameobject",
+          "go": "6a656764-2caa-4a19-89cd-146b3db2e47e"
+        },
+        "jumpForce": 300,
+        "maxForce": 10,
+        "runSpeed": 215,
+        "speed": 125,
+        "standHeight": 69.91,
+        "velocity": 0
+      },
+      {
+        "__type": "CitizenAnimationHelper",
+        "BodyWeight": 1,
+        "EyeSource": {
+          "_type": "gameobject",
+          "go": "6a656764-2caa-4a19-89cd-146b3db2e47e"
+        },
+        "EyesWeight": 1,
+        "HeadWeight": 1,
+        "Height": 1,
+        "IkLeftFoot": null,
+        "IkLeftHand": null,
+        "IkRightFoot": null,
+        "IkRightHand": null,
+        "LookAt": null,
+        "LookAtEnabled": false,
+        "Target": {
+          "_type": "component",
+          "go": "b54f0fb2-05f1-482d-a1f3-e24927c8634c",
+          "component_type": "SkinnedModelRenderer"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "Id": "6a656764-2caa-4a19-89cd-146b3db2e47e",
+        "Name": "Head",
+        "Position": "0,0,63.09742",
+        "Tags": "head",
+        "Enabled": true
+      },
+      {
+        "Id": "b54f0fb2-05f1-482d-a1f3-e24927c8634c",
+        "Name": "Body",
+        "Tags": "body",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "SkinnedModelRenderer",
+            "AnimationGraph": null,
+            "BodyGroups": 341,
+            "BoneMergeTarget": null,
+            "CreateBoneObjects": false,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Model": "models/citizen/citizen.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "Id": "864edc1d-8e86-4af9-83c6-3e97ceeb8c37",
+        "Name": "Camera",
+        "Position": "-93.64215,0,101.0475",
+        "Rotation": "0,0.1305262,0,0.9914449",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "CameraComponent",
+            "BackgroundColor": "0.33333,0.46275,0.52157,1",
+            "ClearFlags": "All",
+            "FieldOfView": 90,
+            "IsMainCamera": true,
+            "Orthographic": false,
+            "OrthographicHeight": 1204,
+            "Priority": 1,
+            "RenderExcludeTags": "",
+            "RenderTags": "",
+            "TargetEye": "None",
+            "Viewport": "0,0,1,1",
+            "ZFar": 10000,
+            "ZNear": 10
+          },
+          {
+            "__type": "Bloom",
+            "BloomColor": {
+              "color": [
+                {
+                  "c": "1,1,1,1"
+                },
+                {
+                  "t": 1,
+                  "c": "1,1,1,1"
+                }
+              ],
+              "alpha": []
+            },
+            "BloomCurve": [
+              {
+                "y": 0.5
+              },
+              {
+                "x": 1,
+                "y": 1
+              }
+            ],
+            "Mode": "Additive",
+            "Strength": 0.5,
+            "Threshold": 0.5,
+            "ThresholdWidth": 0.5
+          },
+          {
+            "__type": "Tonemapping",
+            "ExposureCompensation": 0,
+            "MaximumExposure": 2,
+            "MinimumExposure": 1,
+            "Rate": 1
+          },
+          {
+            "__type": "Sharpen",
+            "Scale": 0.2
+          },
+          {
+            "__type": "CameraController",
+            "body": {
+              "_type": "gameobject",
+              "go": "b54f0fb2-05f1-482d-a1f3-e24927c8634c"
+            },
+            "distance": 150,
+            "head": {
+              "_type": "gameobject",
+              "go": "6a656764-2caa-4a19-89cd-146b3db2e47e"
+            },
+            "player": {
+              "_type": "component",
+              "go": "a4ab9dc0-2e2c-4bb5-b0b6-953ec361a1fc",
+              "component_type": "PlayerMovement"
+            }
+          }
+        ],
+        "Children": [
+          {
+            "Id": "15daf327-c683-411b-94ca-3ab876d41409",
+            "Name": "Listener",
+            "Position": "0,0,0",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "AudioListener",
+                "UseCameraDirection": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}

@@ -1,0 +1,218 @@
+{
+  "Id": "9f832399-4887-46b0-8f21-2ee284f538e2",
+  "GameObjects": [
+    {
+      "Id": "bfc59c12-1ed2-4f91-8956-a95a315eac3c",
+      "Name": "Sun",
+      "Rotation": "-0.0729315,0.4822396,0.1305433,0.8631827",
+      "Tags": "light_directional,light",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "DirectionalLight",
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0.94419,0.97767,1,1",
+          "Shadows": true,
+          "SkyColor": "0.2532,0.32006,0.35349,1"
+        }
+      ]
+    },
+    {
+      "Id": "00344a8c-fa5e-45ae-b12a-10bb781a1dc3",
+      "Name": "2D Skybox",
+      "Tags": "skybox",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "SkyBox2D",
+          "SkyMaterial": "materials/skybox/light_test_sky_sunny03.vmat",
+          "Tint": "1,1,1,1"
+        },
+        {
+          "__type": "EnvmapProbe",
+          "Bounds": {
+            "Mins": "-512,-512,-512",
+            "Maxs": "512,512,512"
+          },
+          "Feathering": 0.02,
+          "Projection": "Sphere",
+          "Texture": "textures/cubemaps/default2.vtex",
+          "TintColor": "1,1,1,1"
+        }
+      ]
+    },
+    {
+      "Id": "6ad70641-3c6c-4402-9c85-9a4969af4764",
+      "Name": "Plane",
+      "Scale": "5,5,5",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": "materials/default.vmat",
+          "Model": "models/dev/plane.vmdl",
+          "RenderType": "On",
+          "Tint": "0.39546,0.51163,0.27128,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,-5",
+          "IsTrigger": false,
+          "Scale": "100,100,10",
+          "Static": false,
+          "Surface": null
+        }
+      ]
+    },
+    {
+      "Id": "3c2490ef-54a0-49bb-8f13-490e40aa51d1",
+      "Name": "Cube",
+      "Position": "19.42624,76.49096,15.35626",
+      "Rotation": "0.00000001819328,-0.00000000000000008235059,0.3052325,0.952278",
+      "Scale": "0.5632889,0.5632889,0.5632889",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ModelRenderer",
+          "BodyGroups": 18446744073709551615,
+          "MaterialGroup": null,
+          "MaterialOverride": "materials/default.vmat",
+          "Model": "models/dev/box.vmdl",
+          "RenderType": "On",
+          "Tint": "1,0,0.93333,1"
+        },
+        {
+          "__type": "BoxCollider",
+          "Center": "0,0,0",
+          "IsTrigger": false,
+          "Scale": "50,50,50",
+          "Static": false,
+          "Surface": null
+        },
+        {
+          "__type": "Rigidbody",
+          "AngularDamping": 0,
+          "Gravity": true,
+          "LinearDamping": 0,
+          "Locking": {},
+          "MassOverride": 0,
+          "RigidbodyFlags": 0,
+          "StartAsleep": false
+        }
+      ]
+    },
+    {
+      "Id": "e0e27b5e-deb9-41d1-8f71-98cd68a8f473",
+      "Name": "Player",
+      "Tags": "player",
+      "Networked": true,
+      "Enabled": true,
+      "__Prefab": "code/playerprefab.prefab"
+    },
+    {
+      "Id": "27adc8db-4d0e-478b-8d18-1b69322c2fb7",
+      "Name": "NetworkManager",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "NetworkManager",
+          "__enabled": false
+        },
+        {
+          "__type": "NetworkHelper",
+          "PlayerPrefab": {
+            "_type": "gameobject",
+            "prefab": "code/playerprefab.prefab"
+          },
+          "SpawnPoints": [
+            {
+              "_type": "gameobject",
+              "go": "d534a0ce-cc8d-4a58-8923-8abd5910bdc8"
+            },
+            {
+              "_type": "gameobject",
+              "go": "fb6d008d-82f8-42e2-be62-2cb97df7feb3"
+            },
+            {
+              "_type": "gameobject",
+              "go": "3de4df7a-5592-488f-9136-61456ef2f7b1"
+            },
+            {
+              "_type": "gameobject",
+              "go": "2c867668-48cf-42d5-b623-f010f380f51e"
+            },
+            {
+              "_type": "gameobject",
+              "go": "780ea0cc-2835-4ff3-b1ba-1ffb94818f11"
+            }
+          ],
+          "StartServer": true
+        }
+      ]
+    },
+    {
+      "Id": "1b4732c9-a5e5-4190-8827-885ab8b235da",
+      "Name": "Spawnpoints",
+      "Enabled": true,
+      "Children": [
+        {
+          "Id": "d534a0ce-cc8d-4a58-8923-8abd5910bdc8",
+          "Name": "Spawnpoint",
+          "Enabled": true
+        },
+        {
+          "Id": "fb6d008d-82f8-42e2-be62-2cb97df7feb3",
+          "Name": "Spawnpoint",
+          "Position": "78.03293,-77.86789,0.000004651126",
+          "Enabled": true
+        },
+        {
+          "Id": "3de4df7a-5592-488f-9136-61456ef2f7b1",
+          "Name": "Spawnpoint",
+          "Position": "102.7878,28.68842,0.000006126629",
+          "Enabled": true
+        },
+        {
+          "Id": "2c867668-48cf-42d5-b623-f010f380f51e",
+          "Name": "Spawnpoint",
+          "Position": "-79.92231,-107.7677,0.00002951695",
+          "Enabled": true
+        },
+        {
+          "Id": "780ea0cc-2835-4ff3-b1ba-1ffb94818f11",
+          "Name": "Spawnpoint",
+          "Position": "-81.72715,48.84546,0.00004091755",
+          "Enabled": true
+        }
+      ]
+    }
+  ],
+  "SceneProperties": {
+    "FixedUpdateFrequency": 50,
+    "Lerping": true,
+    "MaxFixedUpdates": 5,
+    "NetworkFrequency": 60,
+    "ThreadedAnimation": true,
+    "TimeScale": 1,
+    "UseFixedUpdate": true,
+    "NavMesh": {
+      "Enabled": false,
+      "IncludeStaticBodies": true,
+      "IncludeKeyframedBodies": true,
+      "EditorAutoUpdate": true,
+      "AgentHeight": 64,
+      "AgentRadius": 16,
+      "AgentStepSize": 18,
+      "AgentMaxSlope": 40,
+      "ExcludedBodies": "",
+      "IncludedBodies": ""
+    }
+  },
+  "Title": "minimal",
+  "Description": "",
+  "LastSaved": "2024-03-04T11:30:11.1240866\u002B01:00",
+  "__references": []
+}
