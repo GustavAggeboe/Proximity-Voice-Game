@@ -1,144 +1,145 @@
 using Sandbox;
 using Sandbox.Citizen;
+using System;
 
-public sealed class PlayerMovement : Component
-{
-	[Property] private float groundControl = 4.0f;
-	[Property] private float airControl = .1f;
-	[Property] private float maxForce = 10f;
-	[Property] private float speed = 125f;
-	[Property] private float runSpeed = 215f;
-	[Property] private float crouchSpeed = 90f;
-	[Property] private float jumpForce = 200f;
-	[Property] private float standHeight = 69.91f;
-	[Property] private float crouchHeight = 43.5f;
+public sealed class PlayerMovement : Component {
+    [Property] private readonly float groundControl = 4.0f;
+    [Property] private readonly float airControl = .1f;
+    [Property] private readonly float maxForce = 10f;
+    [Property] private readonly float speed = 125f;
+    [Property] private readonly float runSpeed = 215f;
+    [Property] private readonly float crouchSpeed = 90f;
+    [Property] private readonly float jumpForce = 200f;
+    [Property] private readonly float standHeight = 69.91f;
+    [Property] private readonly float crouchHeight = 43.5f;
 
-	[Property] private GameObject head;
-	[Property] private GameObject body;
+    public GameObject head { get; private set; }
+    private GameObject body;
 
-	private Vector3 targetVelocity;
-	public bool isCrouching { get; private set; }
-	private bool isSprinting;
-	private CharacterController characterController;
-	private CitizenAnimationHelper animationHelper;
+    private Vector3 targetVelocity;
+    private CharacterController characterController;
+    private CitizenAnimationHelper animationHelper;
 
-	[Property] private float velocity;
+    [Sync] public Rotation headRotation { get; set; }
+    [Sync] public bool isCrouching { get; private set; }
+    [Sync] public bool isSprinting { get; private set; }
+    [Sync] public string clothingJson { get; private set; }
 
-	protected override void OnAwake()
-	{
-		characterController = Components.Get<CharacterController>();
-		animationHelper = Components.GetInChildrenOrSelf<CitizenAnimationHelper>();
-	}
-	
-	protected override void OnUpdate()
-	{
-		if ( IsProxy )
-			return;
+    protected override void OnAwake() {
+        body = GameObject.Children.Find(x => x.Tags.Has("body"));
+        head = GameObject.Children.Find(x => x.Tags.Has("head"));
+        characterController = Components.Get<CharacterController>();
+        animationHelper = Components.GetInChildrenOrSelf<CitizenAnimationHelper>();
+    }
 
-		velocity = characterController.Velocity.Length;
-		HandleStates();
-		UpdateAnimation();
-		Rotate();
-	}
+    protected override void OnStart() {
+        if (!Network.Active) {
+            Log.Warning($"No owner of playermovement.");
+        }
+        InitializeClothing();
+    }
 
-	protected override void OnFixedUpdate()
-	{
-		if ( IsProxy )
-			return;
+    protected override void OnUpdate() {
+        if (!IsProxy) {
+            HandleStates();
+        }
+        UpdateAnimation();
+        UpdateRotation();
+    }
 
-		UpdateTargetVelocity();
-		Move();
-	}
+    protected override void OnFixedUpdate() {
+        if (IsProxy)
+            return;
+        UpdateTargetVelocity();
+        Move();
+    }
 
-	private void UpdateTargetVelocity()
-	{
-		targetVelocity = Input.AnalogMove * head.Transform.Rotation;
-		targetVelocity = targetVelocity.WithZ( 0 );
-		targetVelocity = targetVelocity.IsNearZeroLength ? 0 : targetVelocity.Normal;
-		targetVelocity *= isCrouching ? crouchSpeed : isSprinting ? runSpeed : speed;
-	}
+    #region Owner
+    private void UpdateTargetVelocity() {
+        targetVelocity = Input.AnalogMove * headRotation;
+        targetVelocity = targetVelocity.WithZ(0);
+        targetVelocity = targetVelocity.IsNearZeroLength ? 0 : targetVelocity.Normal;
+        targetVelocity *= isCrouching ? crouchSpeed : isSprinting ? runSpeed : speed;
+    }
 
-	private void Move()
-	{
-		Vector3 gravity = Scene.PhysicsWorld.Gravity;
-		if (characterController.IsOnGround)
-		{
-			// Friction / acceleration
-			characterController.Velocity = characterController.Velocity.WithZ(0);
-			characterController.Accelerate( targetVelocity );
-			characterController.ApplyFriction( groundControl );
-		} else
-		{
-			// Air control / gravity
-			characterController.Velocity += gravity * Time.Delta * 0.5f;
-			characterController.Accelerate( targetVelocity.ClampLength(maxForce) );
-			characterController.ApplyFriction( airControl );
-		}
+    private void Move() {
+        Vector3 gravity = Scene.PhysicsWorld.Gravity;
+        if (characterController.IsOnGround) {
+            // Friction / acceleration
+            characterController.Velocity = characterController.Velocity.WithZ(0);
+            characterController.Accelerate(targetVelocity);
+            characterController.ApplyFriction(groundControl);
+        } else {
+            // Air control / gravity
+            characterController.Velocity += gravity * Time.Delta * 0.5f;
+            characterController.Accelerate(targetVelocity.ClampLength(maxForce));
+            characterController.ApplyFriction(airControl);
+        }
 
-		characterController.Move();
+        characterController.Move();
 
-		if (!characterController.IsOnGround)
-		{
-			characterController.Velocity += gravity * Time.Delta * 0.5f;
-		} else
-		{
-			characterController.Velocity = characterController.Velocity.WithZ( 0 );
-		}
-	}
+        if (!characterController.IsOnGround) {
+            characterController.Velocity += gravity * Time.Delta * 0.5f;
+        } else {
+            characterController.Velocity = characterController.Velocity.WithZ(0);
+        }
+    }
 
-	private void Rotate()
-	{
-		if ( body == null )
-			return;
+    private void HandleStates() {
+        isCrouching = Input.Pressed("Crouch") ? !isCrouching : isCrouching;
+        isSprinting = Input.Pressed("Run") ? !isSprinting : isSprinting;
+        if (!Input.Down("Forward") || characterController.Velocity.Length <= 110f) {
+            isSprinting = false;
+        }
+        if (Input.Pressed("Jump")) {
+            Jump();
+            isCrouching = false;
+        }
+    }
 
-		Angles targetAngle = new Angles( 0, head.Transform.Rotation.Yaw(), 0 ).ToRotation();
-		float rotationSpeed = characterController.Velocity.Length > 0.1f ? Time.Delta * 10f : Time.Delta * 5f;
-		body.Transform.Rotation = Rotation.Lerp( body.Transform.Rotation, targetAngle, rotationSpeed );
+    private void Jump() {
+        if (!characterController.IsOnGround) { return; }
+        characterController.Punch(Vector3.Up * jumpForce);
+        animationHelper?.TriggerJump();
+    }
+    #endregion
 
-		float rotateDifference = body.Transform.Rotation.Distance( targetAngle );
-		if ( rotateDifference > 1f )
-		{
-			animationHelper.FootShuffle = 10f;
-		}
-		
-	}
+    private void UpdateRotation() {
+        if (body == null)
+            return;
+        Angles targetAngle = new Angles(0, headRotation.Yaw(), 0).ToRotation();
+        float rotationSpeed = characterController.Velocity.Length > 0.1f ? Time.Delta * 10f : Time.Delta * 5f;
+        body.Transform.Rotation = Rotation.Lerp(body.Transform.Rotation, targetAngle, rotationSpeed);
+        float rotateDifference = body.Transform.Rotation.Distance(targetAngle);
+        if (rotateDifference > 1f) {
+            animationHelper.FootShuffle = 10f;
+        }
+    }
 
-	private void Jump()
-	{
-		if (!characterController.IsOnGround) { return; }
+    private void UpdateAnimation() {
+        if (animationHelper == null) { return; }
 
-		characterController.Punch( Vector3.Up * jumpForce );
-		animationHelper?.TriggerJump();
-	}
+        animationHelper.WithWishVelocity(targetVelocity);
+        animationHelper.WithVelocity(characterController.Velocity);
+        animationHelper.AimAngle = headRotation;
+        animationHelper.IsGrounded = characterController.IsOnGround;
+        animationHelper.WithLook(headRotation.Forward, 1f, 0.75f, 0.5f);
+        animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
+        animationHelper.DuckLevel = isCrouching ? 1f : 0f;
 
-	private void UpdateAnimation()
-	{
-		if (animationHelper == null) { return; }
+        characterController.Height = isCrouching ? crouchHeight : standHeight;
+    }
 
-		animationHelper.WithWishVelocity( targetVelocity );
-		animationHelper.WithVelocity(characterController.Velocity );
-		animationHelper.AimAngle = head.Transform.Rotation;
-		animationHelper.IsGrounded = characterController.IsOnGround;
-		animationHelper.WithLook( head.Transform.Rotation.Forward, 1f, 0.75f, 0.5f );
-		animationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Run;
-		animationHelper.DuckLevel = isCrouching ? 1f : 0f;
-	}
-
-	private void HandleStates()
-	{
-		isCrouching = Input.Pressed( "Crouch" ) ? !isCrouching : isCrouching;
-		isSprinting = Input.Pressed( "Run" ) ? !isSprinting : isSprinting;
-		if ( !Input.Down( "Forward" ) || velocity <= 110f )
-		{
-			isSprinting = false;
-		}
-
-		if ( Input.Pressed( "Jump" ) )
-		{
-			Jump();
-			isCrouching = false;
-		}
-
-		characterController.Height = isCrouching ? crouchHeight : standHeight;
-	}
+    private void InitializeClothing() {
+        if (!IsProxy) {
+            clothingJson = ClothingContainer.CreateFromLocalUser().Serialize();
+        }
+        if (clothingJson != null) {
+            if (Components.TryGet<SkinnedModelRenderer>(out var model, FindMode.EverythingInSelfAndChildren)) {
+                ClothingContainer clothing = ClothingContainer.CreateFromJson(clothingJson);
+                clothing.Apply(model);
+            }
+            Log.Info($"Applied clothing to {Connection.Local.Name}");
+        }
+    }
 }

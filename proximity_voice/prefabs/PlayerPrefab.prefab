@@ -1,0 +1,88 @@
+{
+  "RootObject": {
+    "Id": "e914a7ca-48b6-44d2-9a9d-43e261edb483",
+    "Name": "playerprefab",
+    "Tags": "player",
+    "Networked": true,
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "CharacterController",
+        "Acceleration": 10,
+        "Bounciness": 0.3,
+        "GroundAngle": 45,
+        "Height": 69.91,
+        "IgnoreLayers": "player",
+        "Radius": 6.94,
+        "StepHeight": 18
+      },
+      {
+        "__type": "PlayerMovement",
+        "airControl": 0.1,
+        "crouchHeight": 43.5,
+        "crouchSpeed": 90,
+        "groundControl": 4,
+        "jumpForce": 300,
+        "maxForce": 10,
+        "runSpeed": 215,
+        "speed": 125,
+        "standHeight": 69.91
+      },
+      {
+        "__type": "CitizenAnimationHelper",
+        "BodyWeight": 1,
+        "EyeSource": {
+          "_type": "gameobject",
+          "go": "2b9c788f-b63b-420e-9b73-f1c517854b51"
+        },
+        "EyesWeight": 1,
+        "HeadWeight": 1,
+        "Height": 1,
+        "IkLeftFoot": null,
+        "IkLeftHand": null,
+        "IkRightFoot": null,
+        "IkRightHand": null,
+        "LookAt": null,
+        "LookAtEnabled": false,
+        "Target": {
+          "_type": "component",
+          "go": "bf2ce6fd-fdfd-4cb4-93fc-37a199d9cd19",
+          "component_type": "SkinnedModelRenderer"
+        }
+      }
+    ],
+    "Children": [
+      {
+        "Id": "2b9c788f-b63b-420e-9b73-f1c517854b51",
+        "Name": "Head",
+        "Position": "0,0,63.09742",
+        "Tags": "head",
+        "Enabled": true
+      },
+      {
+        "Id": "bf2ce6fd-fdfd-4cb4-93fc-37a199d9cd19",
+        "Name": "Body",
+        "Tags": "body",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "SkinnedModelRenderer",
+            "AnimationGraph": null,
+            "BodyGroups": 341,
+            "BoneMergeTarget": null,
+            "CreateBoneObjects": false,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Model": "models/citizen/citizen.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}
