@@ -1,9 +1,9 @@
 {
   "Title": "Proximity Voice",
   "Type": "game",
-  "Org": "local",
+  "Org": "gusbonians",
   "Ident": "proximity_voice",
-  "Tags": null,
+  "Tags": "game test development",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
@@ -201,6 +201,47 @@
           "Name": "Chat",
           "KeyboardCode": "enter",
           "GroupName": "Other"
+        }
+      ]
+    },
+    "Collision": {
+      "Defaults": {
+        "solid": "Collide",
+        "trigger": "Trigger",
+        "ladder": "Ignore",
+        "water": "Trigger",
+        "player": "Collide"
+      },
+      "Pairs": [
+        {
+          "a": "solid",
+          "b": "solid",
+          "r": "Collide"
+        },
+        {
+          "a": "trigger",
+          "b": "playerclip",
+          "r": "Ignore"
+        },
+        {
+          "a": "trigger",
+          "b": "solid",
+          "r": "Trigger"
+        },
+        {
+          "a": "solid",
+          "b": "trigger",
+          "r": "Collide"
+        },
+        {
+          "a": "playerclip",
+          "b": "solid",
+          "r": "Collide"
+        },
+        {
+          "a": "player",
+          "b": "player",
+          "r": "Collide"
         }
       ]
     }
